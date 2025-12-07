@@ -1,0 +1,47 @@
+@model BeFit.DTOs.TrainingSessionDTO
+
+@{
+    ViewData["Title"] = "Edytuj sesję treningową";
+}
+
+<h1 class="title">Edytuj sesję treningową</h1>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="message is-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="field">
+        <label asp-for="Date" class="label"></label>
+        <div class="control">
+            <input asp-for="Date" class="input" type="date" />
+            <span asp-validation-for="Date" class="help is-danger"></span>
+        </div>
+        <p class="help">Wybierz datę sesji treningowej</p>
+    </div>
+    <div class="field">
+        <label asp-for="StartTime" class="label"></label>
+        <div class="control">
+            <input asp-for="StartTime" class="input" type="time" />
+            <span asp-validation-for="StartTime" class="help is-danger"></span>
+        </div>
+        <p class="help">Podaj czas rozpoczęcia treningu</p>
+    </div>
+    <div class="field">
+        <label asp-for="EndTime" class="label"></label>
+        <div class="control">
+            <input asp-for="EndTime" class="input" type="time" />
+            <span asp-validation-for="EndTime" class="help is-danger"></span>
+        </div>
+        <p class="help">Podaj czas zakończenia treningu (musi być późniejszy niż czas rozpoczęcia)</p>
+    </div>
+    <div class="field has-text-centered">
+        <div class="control">
+            <input type="submit" value="Zapisz" class="button is-success" />
+            <a asp-action="Index" class="button is-link">Powrót do listy</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

@@ -1,0 +1,39 @@
+@model BeFit.DTOs.ExerciseTypeDTO
+
+@{
+    ViewData["Title"] = "Edytuj typ ćwiczenia";
+}
+
+<h1 class="title">Edytuj typ ćwiczenia</h1>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="message is-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="field">
+        <label asp-for="Name" class="label"></label>
+        <div class="control">
+            <input asp-for="Name" class="input" placeholder="Nazwa ćwiczenia" />
+            <span asp-validation-for="Name" class="help is-danger"></span>
+        </div>
+        <p class="help">Wprowadź nazwę typu ćwiczenia (np. Przysiady, Wyciskanie na ławce)</p>
+    </div>
+    <div class="field">
+        <label asp-for="Description" class="label"></label>
+        <div class="control">
+            <textarea asp-for="Description" class="textarea" placeholder="Opis ćwiczenia" rows="4"></textarea>
+            <span asp-validation-for="Description" class="help is-danger"></span>
+        </div>
+        <p class="help">Wprowadź opis typu ćwiczenia (opcjonalnie)</p>
+    </div>
+    <div class="field has-text-centered">
+        <div class="control">
+            <input type="submit" value="Zapisz" class="button is-success" />
+            <a asp-action="Index" class="button is-link">Powrót do listy</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

@@ -1,0 +1,44 @@
+@model IEnumerable<BeFit.DTOs.StatisticsDTO>
+
+@{
+    ViewData["Title"] = "Statystyki";
+}
+
+<h1 class="title">Moje statystyki treningowe</h1>
+<p class="subtitle">Statystyki z ostatnich 4 tygodni</p>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table mx-auto">
+        <thead>
+            <tr>
+                <th>Typ ćwiczenia</th>
+                <th>Liczba wykonanych sesji</th>
+                <th>Łączna liczba powtórzeń</th>
+                <th>Średnie obciążenie (kg)</th>
+                <th>Maksymalne obciążenie (kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stat in Model)
+            {
+                <tr>
+                    <td>@stat.ExerciseTypeName</td>
+                    <td>@stat.TimesPerformed</td>
+                    <td>@stat.TotalRepetitions</td>
+                    <td>@stat.AverageWeight.ToString("F2")</td>
+                    <td>@stat.MaxWeight.ToString("F2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="message is-info">
+        <div class="message-body">
+            Brak danych statystycznych z ostatnich 4 tygodni.
+        </div>
+    </div>
+}
+

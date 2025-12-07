@@ -1,0 +1,54 @@
+@model BeFit.DTOs.ExerciseExecutionDTO
+
+@{
+    ViewData["Title"] = "Szczegóły wykonanego ćwiczenia";
+}
+
+<h1 class="title">Szczegóły wykonanego ćwiczenia</h1>
+
+<div>
+    <dl class="columns is-multiline">
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.ExerciseTypeName)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.ExerciseTypeName)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.TrainingSessionDisplay)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.TrainingSessionDisplay)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.Weight) kg
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.NumberOfSets)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.NumberOfSets)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.RepetitionsPerSet)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.RepetitionsPerSet)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.TotalRepetitions)
+        </dt>
+        <dd class="column is-10">
+            @Model.TotalRepetitions
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="button is-warning">Edytuj</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="button is-danger">Usuń</a>
+    <a asp-action="Index" class="button is-primary">Powrót do listy</a>
+</div>
+

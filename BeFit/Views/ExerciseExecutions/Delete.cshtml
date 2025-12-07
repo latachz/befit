@@ -1,0 +1,53 @@
+@model BeFit.Models.ExerciseExecution
+
+@{
+    ViewData["Title"] = "Usuń wykonane ćwiczenie";
+}
+
+<h1 class="title">Usuń</h1>
+
+<div class="message is-danger">
+    <div class="message-header">
+        <p>Czy na pewno chcesz usunąć to wykonane ćwiczenie?</p>
+    </div>
+    <div class="message-body">
+        <div class="columns is-multiline">
+            <dt class="column is-2">
+                @Html.DisplayNameFor(model => model.ExerciseType)
+            </dt>
+            <dd class="column is-10">
+                @Html.DisplayFor(model => model.ExerciseType.Name)
+            </dd>
+            <dt class="column is-2">
+                @Html.DisplayNameFor(model => model.TrainingSession)
+            </dt>
+            <dd class="column is-10">
+                @Model.TrainingSession.Date.ToString("yyyy-MM-dd") @Model.TrainingSession.StartTime.ToString(@"hh\:mm") - @Model.TrainingSession.EndTime.ToString(@"hh\:mm")
+            </dd>
+            <dt class="column is-2">
+                @Html.DisplayNameFor(model => model.Weight)
+            </dt>
+            <dd class="column is-10">
+                @Html.DisplayFor(model => model.Weight) kg
+            </dd>
+            <dt class="column is-2">
+                @Html.DisplayNameFor(model => model.NumberOfSets)
+            </dt>
+            <dd class="column is-10">
+                @Html.DisplayFor(model => model.NumberOfSets)
+            </dd>
+            <dt class="column is-2">
+                @Html.DisplayNameFor(model => model.RepetitionsPerSet)
+            </dt>
+            <dd class="column is-10">
+                @Html.DisplayFor(model => model.RepetitionsPerSet)
+            </dd>
+        </div>
+        <form asp-action="Delete" class="has-text-centered">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Usuń" class="button is-danger" />
+            <a asp-action="Index" class="button is-link">Powrót do listy</a>
+        </form>
+    </div>
+</div>
+

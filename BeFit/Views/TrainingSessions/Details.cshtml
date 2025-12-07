@@ -1,0 +1,71 @@
+@model BeFit.DTOs.TrainingSessionDTO
+
+@{
+    ViewData["Title"] = "Szczegóły sesji treningowej";
+}
+
+<h1 class="title">Sesja treningowa</h1>
+
+<div>
+    <dl class="columns is-multiline">
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.EndTime)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.EndTime)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        <dd class="column is-10">
+            @Model.Duration.ToString(@"hh\:mm")
+        </dd>
+    </dl>
+</div>
+
+@if (Model.ExerciseExecutions != null && Model.ExerciseExecutions.Any())
+{
+    <h2 class="subtitle">Wykonane ćwiczenia</h2>
+    <table class="table mx-auto">
+        <thead>
+            <tr>
+                <th>Typ ćwiczenia</th>
+                <th>Obciążenie (kg)</th>
+                <th>Liczba serii</th>
+                <th>Powtórzenia w serii</th>
+                <th>Łączna liczba powtórzeń</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var execution in Model.ExerciseExecutions)
+            {
+                <tr>
+                    <td>@execution.ExerciseTypeName</td>
+                    <td>@execution.Weight</td>
+                    <td>@execution.NumberOfSets</td>
+                    <td>@execution.RepetitionsPerSet</td>
+                    <td>@execution.TotalRepetitions</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="button is-warning">Edytuj</a>
+    <a asp-action="Delete" asp-route-id="@Model.Id" class="button is-danger">Usuń</a>
+    <a asp-action="Index" class="button is-primary">Powrót do listy</a>
+</div>
+

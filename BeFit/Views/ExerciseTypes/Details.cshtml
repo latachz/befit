@@ -1,0 +1,33 @@
+@model BeFit.DTOs.ExerciseTypeDTO
+
+@{
+    ViewData["Title"] = "Szczegóły typu ćwiczenia";
+}
+
+<h1 class="title">@Html.DisplayFor(model => model.Name)</h1>
+
+<div>
+    <dl class="columns is-multiline">
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="column is-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="column is-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="button is-warning">Edytuj</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="button is-danger">Usuń</a>
+    }
+    <a asp-action="Index" class="button is-primary">Powrót do listy</a>
+</div>
+
