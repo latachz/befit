@@ -23,10 +23,15 @@ namespace BeFit.Controllers
             _context = context;
         }
 
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        }
+
         // GET: TrainingSessions
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var sessions = await _context.TrainingSession
                 .Include(t => t.User)
                 .Where(t => t.UserId == userId)
@@ -43,7 +48,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var trainingSession = await _context.TrainingSession
                 .Include(t => t.User)
                 .Include(t => t.ExerciseExecutions)
@@ -69,7 +74,7 @@ namespace BeFit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Date,StartTime,EndTime")] TrainingSessionDTO trainingSessionDTO)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
 
             if (trainingSessionDTO.EndTime <= trainingSessionDTO.StartTime)
             {
@@ -102,7 +107,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var trainingSession = await _context.TrainingSession
                 .FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
 
@@ -128,7 +133,7 @@ namespace BeFit.Controllers
                 ModelState.AddModelError("EndTime", "Czas zakończenia musi być późniejszy niż czas rozpoczęcia");
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var existingSession = await _context.TrainingSession
                 .FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
 
@@ -171,7 +176,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var trainingSession = await _context.TrainingSession
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
@@ -189,7 +194,7 @@ namespace BeFit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var trainingSession = await _context.TrainingSession
                 .FirstOrDefaultAsync(m => m.Id == id && m.UserId == userId);
 

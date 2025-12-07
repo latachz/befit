@@ -9,6 +9,7 @@ using BeFit.Data;
 using BeFit.Models;
 using Microsoft.AspNetCore.Authorization;
 using BeFit.DTOs;
+using System.Security.Claims;
 
 namespace BeFit.Controllers
 {
@@ -19,6 +20,11 @@ namespace BeFit.Controllers
         public ExerciseTypesController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
         }
 
         // GET: ExerciseTypes

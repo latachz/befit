@@ -23,10 +23,15 @@ namespace BeFit.Controllers
             _context = context;
         }
 
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        }
+
         // GET: ExerciseExecutions
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var executions = await _context.ExerciseExecution
                 .Include(e => e.ExerciseType)
                 .Include(e => e.TrainingSession)
@@ -44,7 +49,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var exerciseExecution = await _context.ExerciseExecution
                 .Include(e => e.ExerciseType)
                 .Include(e => e.TrainingSession)
@@ -62,7 +67,7 @@ namespace BeFit.Controllers
         // GET: ExerciseExecutions/Create
         public async Task<IActionResult> Create()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseType, "Id", "Name");
             
             var sessions = await _context.TrainingSession
@@ -83,7 +88,7 @@ namespace BeFit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ExerciseTypeId,TrainingSessionId,Weight,NumberOfSets,RepetitionsPerSet")] ExerciseExecutionDTO exerciseExecutionDTO)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             
             if (exerciseExecutionDTO.TrainingSessionId <= 0)
             {
@@ -155,7 +160,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var exerciseExecution = await _context.ExerciseExecution
                 .Include(e => e.TrainingSession)
                 .Where(e => e.Id == id && e.TrainingSession.UserId == userId)
@@ -192,7 +197,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             
             if (exerciseExecutionDTO.TrainingSessionId <= 0)
             {
@@ -272,7 +277,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var exerciseExecution = await _context.ExerciseExecution
                 .Include(e => e.ExerciseType)
                 .Include(e => e.TrainingSession)
@@ -292,7 +297,7 @@ namespace BeFit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var exerciseExecution = await _context.ExerciseExecution
                 .Where(e => e.Id == id && e.TrainingSession.UserId == userId)
                 .FirstOrDefaultAsync();

@@ -21,10 +21,15 @@ namespace BeFit.Controllers
             _context = context;
         }
 
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
+        }
+
         // GET: Statistics
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = GetUserId();
             var fourWeeksAgo = DateTime.Today.AddDays(-28);
 
             var statistics = await _context.ExerciseExecution
