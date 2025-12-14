@@ -18,7 +18,7 @@ dotnet build
 dotnet ef database update
 ```
 
-4. Run locally:￼
+4. Run locally:
 ```bash
 dotnet watch run
 ``` 
